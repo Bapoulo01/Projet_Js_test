@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
+</head>
+<body class="">
+    <div class="w-full h-full  border flex fixed">
+        <div class="infos w-1/2 h-screen bg-violet-900 rounded-r-3xl flex items-center justify-center">
+            <h1 class="text-3xl font-bold text-white">
+                <span class="text-5xl">G</span>estions 
+                <span class="text-5xl">T</span>aches</h1>
+        </div>
+        <div class="log w-1/2 flex-col items-center justify-center ">
+            <h2 class="text-3xl font-bold text-center py-12 mb-2 mt-3 ">Login</h2>
+            <div  id="alertConnex"></div>
+            <form id="loginForm" class=" w-5/6 mx-12 mt-2" action="">
+                <label class="" for="">Login</label>
+                <input id="login" type="text" class="w-full p-2 mb-4 mt-2 rounded-lg border"placeholder="Username">
+                <p id="loginError" class="mt-2 text-sm text-red-600 dark:text-red-500"></p>
+                <label for="">Password</label>
+                <input id="pwd" type="password" class="w-full p-2 mb-4 mt-2 rounded-lg border" placeholder="••••••••">
+                <p id="passwordError" class="mt-2 text-sm text-red-600 dark:text-red-500"></p>
+
+                <h2 class="text-indigo-900 mb-2 text-end">Mot de pass oublié ?</h2>
+                <button id="btnlogin" type="button" class=" w-full focus:outline-none text-white bg-violet-900 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Se connecter</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/connexion.js"></script>
+</body>
+</html>

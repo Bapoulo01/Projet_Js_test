@@ -1,0 +1,7 @@
+{
+    "utilisateurs": [
+      { "id": 1, "login": "user1", "mdp": "12345" },
+      { "id": 2, "login": "user2", "mdp": "54321" },
+      { "id": 3, "login": "admin", "mdp": "admin" }
+    ]
+  }
