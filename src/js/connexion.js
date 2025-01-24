@@ -1,9 +1,7 @@
-// connexion.js
 
 // Fonction principale pour gérer la connexion
-const btnLogin = document.getElementById('btnlogin');
-
-btnLogin.addEventListener('click', async function () {
+const btnConnect = document.getElementById('btnConnect');
+btnConnect.addEventListener('click', async function () {
     const login = document.getElementById('login').value.trim();
     const pwd = document.getElementById('pwd').value.trim();
 
@@ -42,7 +40,7 @@ btnLogin.addEventListener('click', async function () {
 
             if (utilisateur) {
                 console.log('Connexion réussie', utilisateur);
-                connectUser(utilisateur); // Redirection basée sur le rôle
+                connectUser(utilisateur); // Redirection basée sur le User
             } else {
                 document.getElementById('alertConnex').innerHTML = `<div  class=" p-4 mb-4 mx-10 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-700 dark:text-red-300" role="alert">Login ou mot de passe incorrect.</div>`; 
                 document.getElementById('pwd').value = ''; // Réinitialiser le mot de passe
@@ -64,3 +62,15 @@ function connectUser(utilisateur) {
     // Rediriger l'utilisateur vers la page d'accueil après connexion
     window.location.href = "./tache.html";
 }
+
+
+// Gestion de la déconnexion
+const btnDeconnexion = document.getElementById('btnDeconnexion');
+
+btnDeconnexion.addEventListener('click', function () {
+    // Supprimer l'utilisateur connecté du localStorage
+    localStorage.removeItem('utilisateurConnecte');
+
+    // Rediriger vers la page de connexion
+    window.location.href = './connexion.html';
+});
