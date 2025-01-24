@@ -1,6 +1,7 @@
    //variable
 const taskBtn=document.querySelector("#taskBtn")
 const taskForm=document.querySelector("#taskForm")
+const TacheAll=document.querySelector("#TacheAll")
 const tacheFilter=document.querySelector("#tacheFilter")
 const inputs = document.querySelectorAll("input[type=text]");
 const taskBody=document.querySelector("#taskBody")
@@ -19,28 +20,29 @@ const inputsChecked=document.querySelectorAll("input[type=checkbox]:checked");
       body.classList.toggle("bg-white");
     });
 
-    var taches=[
-        {
-            id: 1,
-            nom: "UML",
-        },
-        {
-            id: 2,
-            nom: "Php",
-        },
-        {
-            id: 3,
-            nom: "Design",
-        },
-        {
-            id: 4,
-            nom: "Maths",
-        },
-        {
-            id: 5,
-            nom: "Js",
-        }
-    ]
+    // var taches=[
+    //     {
+    //         id: 1,
+    //         nom: "UML",
+    //     },
+    //     {
+    //         id: 2,
+    //         nom: "Php",
+    //     },
+    //     {
+    //         id: 3,
+    //         nom: "Design",
+    //     },
+    //     {
+    //         id: 4,
+    //         nom: "Maths",
+    //     },
+    //     {
+    //         id: 5,
+    //         nom: "Js",
+    //     }
+    // ]
+
     //stocher les taches dans le localStorage
     localStorage.setItem("taches",JSON.stringify([
         {
@@ -66,9 +68,10 @@ const inputsChecked=document.querySelectorAll("input[type=checkbox]:checked");
 ]))
 
 
+var taches = getTaches()
+
 init();
 
-var taches = getTaches()
 
 //generer des Tr
 function generateTr(tache) {
@@ -133,6 +136,22 @@ function updateTaches(tab){
     localStorage.setItem("taches", JSON.stringify(tab))
 }
 
+//checker tous les tache
+TacheAll.addEventListener("click",()=>{
+    const inputsToCheck=document.querySelectorAll(".coche")
+    if (checkbox.checked) {
+        inputsToCheck.forEach(function(input) {
+            input.checked=true
+             taskDone(input)
+            })
+    } else {
+        inputsToCheck.forEach(function(input) {
+            input.checked=false
+            taskDone(input)
+            })
+    }
+})
+
 
 //ajout Tache
 taskBtn.addEventListener("click",function(){
@@ -148,7 +167,7 @@ taskBtn.addEventListener("click",function(){
 
  // Declaration fonction
  function taskDone(checkbox) {
-     const all=document.querySelector("#doneAll")
+     const all=document.querySelector("#TacheAll")
      const ligneCible = checkbox.parentElement.parentElement;
      if (checkbox.checked) {
        ligneCible.style.textDecoration = "line-through";
@@ -158,28 +177,22 @@ taskBtn.addEventListener("click",function(){
      }
    } 
 
-   //checker tout les inpts
- function doneAll(checkbox) {
-     const inputsToCheck=document.querySelectorAll(".coche")
-     if (checkbox.checked) {
-         inputsToCheck.forEach(function(input) {
-             input.checked=true
-              taskDone(input)
-             })
-     } else {
-         inputsToCheck.forEach(function(input) {
-             input.checked=false
-             taskDone(input)
-             })
-     }
-   } 
+
 
    //fonction qui supprime une tache
    function RemoveTache(){
     const inputsChecked = Array.from(document.querySelectorAll('input[type=checkbox]:checked'))
     console.log(inputsChecked);
-    taches = deleteTache(inputsChecked)
-    updateTaches(taches)
+    // Demander confirmation à l'utilisateur
+    const confirmation = confirm("Voulez-vous vraiment supprimer les tâches sélectionnées ?");
+    if (confirmation) {
+        // Supprimer les tâches sélectionnées
+        taches = deleteTache(inputsChecked);
+        updateTaches(taches);
+        init(); // Recharger la liste des tâches
+    } else {
+        alert("Suppression annulée !");
+    }
 }
 
 //Supprimer tache
@@ -255,40 +268,8 @@ function getLocalStorage() {
         return tasks;
 }
     
-    //ajouter une tache
-btnSave.addEventListener("click", function () {
-
-    let newTache = Object.fromEntries(new FormData(tForm))
-    // console.log(newTache);
-    newTache["id"] = Math.floor(Math.random() * 1000)
-    taches.push(newTache)
-    updateTaches(taches)
-    // tBody.innerHTML=generateTBody(taches)
-    init();
-})
-
-//barrer les taches
-function taskDone(checkbox) {
-    const ligneCible = checkbox.parentElement.parentElement;
-
-    if (checkbox.checked) {
-        ligneCible.style.textDecoration = "line-through";
-    } else {
-        ligneCible.style.textDecoration = "none";
-    }
-}
 
 
-//fonction pour la suppression des taches
-btnDel.addEventListener("click", function () {
-    // alert("ok")
-    const inputsChecked = Array.from(document.querySelectorAll('input[type=checkbox]:checked'))
-    console.log(inputsChecked);
-    taches = deleteTache(inputsChecked)
-    updateTaches(taches)
-    
-
-})
 
 
 
