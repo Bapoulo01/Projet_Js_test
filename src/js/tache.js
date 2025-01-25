@@ -11,13 +11,23 @@ const inputsChecked=document.querySelectorAll("input[type=checkbox]:checked");
 
    // Récupérer le bouton et le body
     const toggleButton = document.getElementById("toggleButton");
+    const taskTable = document.getElementById("taskTable");
     const body = document.body;
 
     //le Dark/Light Mode
     toggleButton.addEventListener("click", () => {
-      // Basculer entre les classes
+    //   // Basculer entre les classes
       body.classList.toggle("bg-blue-900");
       body.classList.toggle("bg-white");
+
+      taskTable.classList.toggle("bg-blue-900");
+      taskTable.classList.toggle("bg-white");
+      
+    //   if (this.checked) {
+    //     HTMLElement.classList.add("dark");
+    //   }else{
+    //     HTMLElement.classList.remove("dark");
+    //   }
     });
 
     // var taches=[
@@ -44,29 +54,30 @@ const inputsChecked=document.querySelectorAll("input[type=checkbox]:checked");
     // ]
 
     //stocher les taches dans le localStorage
-    localStorage.setItem("taches",JSON.stringify([
-        {
-            id: 1,
-            nom: "UML",
-        },
-        {
-            id: 2,
-            nom: "Php",
-        },
-        {
-            id: 3,
-            nom: "Design",
-        },
-        {
-            id: 4,
-            nom: "Maths",
-        },
-        {
-            id: 5,
-            nom: "Js",
-        }
-]))
-
+    if (!localStorage.getItem(taches)) {
+        localStorage.setItem("taches",JSON.stringify([
+            {
+                id: 1,
+                nom: "UML",
+            },
+            {
+                id: 2,
+                nom: "Php",
+            },
+            {
+                id: 3,
+                nom: "Design",
+            },
+            {
+                id: 4,
+                nom: "Maths",
+            },
+            {
+                id: 5,
+                nom: "Js",
+            }
+    ])) 
+    }
 
 var taches = getTaches()
 
@@ -124,6 +135,7 @@ function init() {
     // alert("ok")
     // taches=getLocalStorage()
     //ajout des tr sur le tbody du tableau
+    const taches=getTaches();
     taskBody.innerHTML = generateTBody(taches)
 }
 
@@ -131,7 +143,7 @@ function init() {
 function getTaches(){
     return JSON.parse(localStorage.getItem("taches"))
 }
-
+//MaJ des taches qui sont dans le localStorage
 function updateTaches(tab){
     localStorage.setItem("taches", JSON.stringify(tab))
 }
@@ -154,14 +166,19 @@ TacheAll.addEventListener("click",()=>{
 
 
 //ajout Tache
-taskBtn.addEventListener("click",function(){
+taskForm.addEventListener("submit",function(e){
+    e.preventDefault();
     let  newTache=Object.fromEntries(new FormData(taskForm)) 
    newTache["id"]=Math.floor(Math.random()*1000)
- 
+   const taches=getTaches();
    taches.push(newTache)
    updateTaches(taches)
    console.log(newTache);
-   init();
+   taskBody.innerHTML+=generateTr(newTache);    //ajouter la nouvelle tache dans taskBody
+    document.getElementById("inputTache").value="";//vider champs du modal
+    // document.getElementById("authentication-modal").classList.add("hidden");
+
+//    init();
     //  taskForm.submit()
  })
 
